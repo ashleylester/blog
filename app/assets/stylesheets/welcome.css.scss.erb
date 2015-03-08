@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 header {
-	background-image: url(home_banner.jpg);
+	background-image: url('<%= asset_path("home_banner.jpg") %> ');
 	background-size: cover;
 	padding: 22px;
 }
@@ -38,7 +38,7 @@ p {
 		border-radius: 150px;
 		-webkit-border-radius: 150px;
 		-moz-border-radius: 150px;
-		background: url(me.jpg) repeat-x;
+		background: url('<%= asset_path("me.jpg") %> ') repeat-x;
 		margin-right: 50px;
 		background-size: cover;
 }
