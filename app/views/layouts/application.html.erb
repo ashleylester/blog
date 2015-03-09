@@ -31,15 +31,59 @@
 				<ul class="right">
 					<li class="divider"></li>
 					<li><a href="#">Blog</a></li>
-
-					<li class="divider"></li>					<li><a href="#">Projects</a></li>
+					<li class="divider"></li>
+					<li><a href="#">Projects</a></li>
 					<li class="divider"></li>
 					<li><a href="#">Chess</a></li>
 					<li class="divider"></li>
 					<li class="has-form">
-				  	<a href="http://foundation.zurb.com/docs" class="button round">
-							Contact Me
-						</a>
+				  	<a href="#" data-reveal-id="firstModal" class="button round">Contact Me</a>
+						<div id="firstModal" class="reveal-modal" data-reveal>
+						  <h4>Contact Me</h4>
+						  <p>This form is not yet operational. Please use the social media links at the bottom of the homepage.</p>
+							<form>
+							  <div class="row">
+							    <div class="large-12 columns">
+							      <label>Your Email Address
+							        <input type="text" placeholder="" />
+							      </label>
+							    </div>
+							  </div>
+							  <div class="row">
+							    <div class="large-6 columns">
+							      <label>Name or Company
+							        <input type="text" placeholder="" />
+							      </label>
+							    </div>
+							    <div class="large-6 columns">
+							      <label>Telephone
+							        <input type="text" placeholder="This field is optional" />
+							      </label>
+							    </div>
+							  </div>
+							 <div class="row">
+						    <div class="large-6 columns">
+						      <label>Subject
+						        <input type="text" placeholder="" />
+						      </label>
+						    </div>
+							 </div>
+							  <div class="row">
+							    <div class="large-12 columns">
+							      <label>Body
+							        <textarea placeholder="Write your message here&hellip;"></textarea>
+							      </label>
+							    </div>
+							  </div>
+							</form>
+						  <p><a href="#" data-reveal-id="secondModal" class="button small">Submit</a></p>
+						  <a class="close-reveal-modal">&#215;</a>
+						</div>
+						<div id="secondModal" class="reveal-modal" data-reveal>
+						  <h4>Error</h4>
+						  <p>This form is not yet operational.</p>
+						  <a class="close-reveal-modal">&#215;</a>
+						</div>
 					</li>
 					<li class="divider"></li>
 				</ul>
@@ -47,6 +91,14 @@
 		  </nav>
 		</div>
     <%= yield %>
-
+		<footer>
+			<div class="row">
+				<a href="#" class="webicon facebook large">Like us on Facebook</a>
+				<a href="#" class="webicon stackoverflow large">Like us on Facebook</a>
+				<a href="#" class="webicon github large">Like us on Facebook</a>
+								<a href="#" class="webicon twitter large">Like us on Facebook</a>
+												<a href="#" class="webicon google large">Like us on Facebook</a>
+			</div>
+		</footer>
   </body>
 </html>
