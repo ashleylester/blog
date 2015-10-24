@@ -5,9 +5,13 @@
 header {
 	background-image: url('<%= asset_path("home_banner.jpg") %> ');
 	background-size: cover;
-	padding: 22px;
+	padding: 16px;
 }
+header.row {
 
+    $row-width: rem-calc(1100)
+
+}
 footer {
 	background-color: #333333;
 }
@@ -18,12 +22,24 @@ h1 {
 	font-size: 54px;
 	text-rendering: optimizeLegibility
 }
-
+h3 {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 800;
+    font-size: 21px;
+    text-rendering: optimizeLegibility
+}
 h4 {
 	font-family: 'Ubuntu', sans-serif;
 	font-weight: 300;
 	font-size: 28px;
 	text-rendering: optimizeLegibility
+}
+
+h5 {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 800;
+    font-size: 17px;
+    text-rendering: optimizeLegibility
 }
 
 .about {
@@ -43,7 +59,7 @@ p {
 		-webkit-border-radius: 150px;
 		-moz-border-radius: 150px;
 		background: url('<%= asset_path("me.jpg") %> ') repeat-x;
-		margin-right: 50px;
+    margin-right: 50px;
 		background-size: cover;
 }
 
@@ -66,6 +82,14 @@ img {
 	margin-right:auto;
 	float:none !important;
 	position:center;
+
+    height:150px;
+    width: 150px;
+    padding:10px;
+    border-radius: 150px;
+    -webkit-border-radius: 150px;
+    -moz-border-radius: 150px;
+    background-size: cover;
 }
 
 small {
