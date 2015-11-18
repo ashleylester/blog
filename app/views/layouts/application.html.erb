@@ -17,10 +17,10 @@
 
   <body>
 		<div class="fixed">
-			<nav class="top-bar" data-topbar role="navigation">
+			<nav class="top-bar" data-options="scrolltop: false" role="navigation">
 				<ul class="title-area">
 				  <li class="name">
-				    <h1><a href="#">Ashley Lester</a></h1>
+				    <h1><%= link_to "Ashley Lester", root_path %></a></h1>
 		      </li>
 		      <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
 		      <li class="toggle-topbar menu-icon">
@@ -30,55 +30,51 @@
 				<section class="top-bar-section">
 				<ul class="right">
 					<li class="divider"></li>
-					<li><a href="#">Blog</a></li>
+					<li><%= link_to 'Blog', posts_path %></li>
 					<li class="divider"></li>
-
+                    <li><%= link_to "Download my CV", welcome_download_url%></li>
+                    <li class="divider"></li>
 					<li class="has-form">
 				  	<a href="#" data-reveal-id="firstModal" class="button round">Contact Me</a>
 						<div id="firstModal" class="reveal-modal" data-reveal>
 						  <h4>Contact Me</h4>
-						  <p>This form is not yet operational. Please use the social media links at the bottom of the homepage.</p>
-							<form>
-							  <div class="row">
-							    <div class="large-12 columns">
-							      <label>Your Email Address
-							        <input type="text" placeholder="" />
-							      </label>
-							    </div>
-							  </div>
-							  <div class="row">
-							    <div class="large-6 columns">
-							      <label>Name or Company
-							        <input type="text" placeholder="" />
-							      </label>
-							    </div>
-							    <div class="large-6 columns">
-							      <label>Telephone
-							        <input type="text" placeholder="This field is optional" />
-							      </label>
-							    </div>
-							  </div>
-							 <div class="row">
-						    <div class="large-6 columns">
-						      <label>Subject
-						        <input type="text" placeholder="" />
-						      </label>
-						    </div>
-							 </div>
-							  <div class="row">
-							    <div class="large-12 columns">
-							      <label>Body
-							        <textarea placeholder="Write your message here&hellip;"></textarea>
-							      </label>
-							    </div>
-							  </div>
-							</form>
-						  <p><a href="#" data-reveal-id="secondModal" class="button small">Submit</a></p>
-						  <a class="close-reveal-modal">&#215;</a>
-						</div>
-						<div id="secondModal" class="reveal-modal" data-reveal>
-						  <h4>Error</h4>
-						  <p>This form is not yet operational.</p>
+						  <p>Due to Heroku's lack of free SSL endpoints, I cannot implement this right now.
+                          Until I move to CloudFlare, please use the social media links at the bottom of the page!</p>
+							<%#= form_for :contact_request , url: contact_requests_path do |f| %>
+							  <!--<div class="row">-->
+							    <!--<div class="large-12 columns">-->
+                                  <!--<%#= f.label :title %>-->
+                                  <!--<%#= f.text_field :title %>-->
+							    <!--</div>-->
+							  <!--</div>-->
+							  <!--<div class="row">-->
+							    <!--<div class="large-6 columns">-->
+							      <!--<%#= f.label :name_or_company %>-->
+							      <!--<%#= f.text_field :name_or_company %>-->
+							    <!--</div>-->
+							    <!--<div class="large-6 columns">-->
+                                  <!--<%#= f.label :telephone %>-->
+                                  <!--<%#= f.text_field :telephone %>-->
+							    <!--</div>-->
+							  <!--</div>-->
+                              <!--<div class="row">-->
+						        <!--<div class="large-6 columns">-->
+						            <!--<%#= f.label :subject %>-->
+                                    <!--<%#= f.text_field :subject %>-->
+						        <!--</div>-->
+                              <!--</div>-->
+							  <!--<div class="row">-->
+							    <!--<div class="large-12 columns">-->
+							        <!--<%#= f.label :body %>-->
+                                    <!--<%#= f.text_area :body %>-->
+							    <!--</div>-->
+							  <!--</div>-->
+                              <!--<div class="row">-->
+                                <!--<div class="large-12 columns">-->
+                                    <!--<%#= f.submit :submit, class: 'button' %>-->
+                                <!--</div>-->
+                              <!--</div>-->
+                            <!--<%# end %>-->
 						  <a class="close-reveal-modal">&#215;</a>
 						</div>
 					</li>

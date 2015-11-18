@@ -1,0 +1,214 @@
+<div class="row contentstart">
+
+
+  <div class="large-9 columns" role="content">
+
+    <article>
+
+      <h3><a href="#">Measures and Contexts in Business Objects</a></h3>
+      <h6>Written by Ashley on November 18th, 2015.</h6>
+
+      <div class="row">
+        <div class="large-6 columns">
+          <p>Measures are probably the biggest benefit of WEBI, and at the same time,
+            they cause the biggest headache for new users. In this article, we take a
+          really simple scenario for a group of bank accounts. In our scenario,
+          the customer wants to see some information about account activity last month. They want to see one account
+            number per row, they want to see the sum of debits for each account, and they want to
+            see the biggest single debit on each account.</p>
+
+        </div>
+        <div class="large-6 columns">
+          <img src="<%= asset_path "blog1.png" %>" class="plain"/>
+        </div>
+      </div>
+
+      <p>In other words, they want to see the account number, the total spend,
+        and the biggest single item that was spent. Sounds simple, no?
+        Let's imagine the table that we would deliver to the customer, and use it as a prototype
+        to guide us in constructing the query.</p>
+
+      <table>
+        <tr>
+        <th>Account Number</th>
+        <th>Total Spend</th>
+        <th>Maximum Purchase</th>
+        </tr>
+        <tr>
+          <td>1034213</td>
+          <td>1098.90</td>
+          <td>399.00</td>
+          </tr>
+        <tr>
+          <td>1034215</td>
+            <td>3433.91</td>
+            <td>1250.99</td>
+          </tr>
+        <tr>
+          <td>1034218</td>
+          <td>2060.66</td>
+          <td>850.00</td>
+        </tr>
+        </tr>
+      </table>
+
+      <p>Now, here I'm going to assume that the universe has been constructed with debit amount, credit amount, balance, and so on, defined
+      as measures. So, when we construct our query in the drag-and-drop Edit Query section of WEBI, it is going to look a bit like this&hellip;</p>
+
+      <table><tr><th>Account Number</th><th>Transaction Date</th><th>Transaction Amount</th></tr></table>
+
+      <p>&hellip;where Account Number is a dimension object, Transaction Date is a dimension object, and
+      Transaction Amount is a measure.</p>
+
+      <p>So, now that we have run our imaginary query, we are going to start putting our table together. Right?
+      I find it helpful at this point to imagine the SQL that is brought back. It will look like this:</p>
+      <table>
+        <tr>
+          <th>Account Number</th>
+          <th>Transaction Date</th>
+          <th>Transaction Amount</th>
+        </tr>
+        <tr>
+          <td>1034215</td>
+          <td>01/04/2015</td>
+          <td>0.98</td>
+        </tr>
+        <tr>
+          <td>1034215</td>
+          <td>01/04/2015</td>
+          <td>20.00</td>
+        </tr>
+        <tr>
+          <td>1034215</td>
+          <td>02/04/2015</td>
+          <td>3.49</td>
+        </tr>
+        <tr>
+          <td>1034215</td>
+          <td>02/04/2015</td>
+          <td>10.00</td>
+        </tr>
+        <tr>
+          <td>1034218</td>
+          <td>01/04/2015</td>
+          <td>59.99</td>
+        </tr>
+        <tr>
+          <td>&vellip;</td>
+          <td>&vellip;</td>
+          <td>&vellip;</td>
+        </tr>
+      </table>
+
+      <p>Right away notice that we have multiple accounts, multiple dates, and transactions.</p>
+      <p>Of course, the first thing we are going to do is drag our account number into a table.
+      I'm going to use the Business Objects parlance of "blocks" instead of tables from now on.</p>
+      <p>So, because Transaction Amount is a measure, it's going to aggregate automatically for us.
+      Right? So, we can drop it in, and it will still keep one account per line, and the transactions
+      will aggregate for us. That's really useful.</p>
+
+      <table>
+        <tr>
+          <th>Account Number</th>
+          <th>Total Spend</th>
+        </tr>
+        <tr>
+          <td>1034213</td>
+          <td>1098.90</td>
+        </tr>
+        <tr>
+          <td>1034215</td>
+          <td>3433.91</td>
+        </tr>
+        <tr>
+          <td>1034218</td>
+          <td>2060.66</td>
+        </tr>
+        </tr>
+      </table>
+
+      <p>Look at this, we already have two-thirds of our report built. So, let's do the third column.</p>
+      <p>The third column involves creating another measure, because we want it to return to us
+      the maximum transaction amount. So, we can do that by going into the variable creator, we are
+      creating a measure, and we want the definition of the measure to be:</p>
+
+      <p><code>Max([Transaction Amount])</code></p>
+
+      <p>What are you waiting for?! Drop the measure into the block!</p>
+
+      <table>
+        <tr>
+          <th>Account Number</th>
+          <th>Total Spend</th>
+          <th>Maximum Purchase</th>
+        </tr>
+        <tr>
+          <td>1034213</td>
+          <td>1098.90</td>
+          <td bgcolor="#ffb6c1">1098.90</td>
+        </tr>
+        <tr>
+          <td>1034215</td>
+          <td>3433.91</td>
+          <td bgcolor="#ffb6c1">3433.91</td>
+        </tr>
+        <tr>
+          <td>1034218</td>
+          <td>2060.66</td>
+          <td bgcolor="#ffb6c1">2060.66</td>
+        </tr>
+
+      </table>
+
+    <p>The first time I saw this behaviour, I thought that someone at SAP had made a
+    colossal error by creating a function called Max that does exactly the same thing as Sum.
+    Alas, that is not what is happening here. The thing that explains this behaviour is what is known
+    as a context.</p>
+
+      <p>In WEBI, each block has a default context depending on the dimensions in the block.
+      In this case, our context is account number. <strong>Each measure will aggregate
+      up to the level of the default context before any other operation is applied to it.</strong>
+        In other words, for each account, our Max function is <strong>not</strong> saying "select the maximum transaction amount
+        from the list of account numbers, transaction dates and transaction amounts". Instead, for each account, it is saying
+        "select the maximum value from this block of account numbers and aggregated transactions". See? For each account, Max picks the maximum value out of a collection containing exactly one number. It has no choice!
+        <strong>In order to change this behaviour, we need to change the default context of the block and define our own.</strong></p>
+      <p>Actually, that is simple (you'll be glad to hear). There are different ways of doing it, but they are very similar. Well,
+      they are in fact doing the same thing, it's just that one operator replaces the default context, one adds to the default context,
+      and one takes away from the default context.</p>
+      <p>Meet these slippery characters: In, ForEach and ForAll, who amend the context of a block as I described in the last paragraph.</p>
+      <p>Let's alter our formula with In, the context operator that replaces the current context with the arguments provided
+      to the operator.</p>
+
+      <p><code>Max([Transaction Amount] In([Account Number];[Balance Date]))</code></p>
+
+      <p>And now your diligent effort in reading this article has rewarded you with the ability to aggregate
+      measures from whatever context you want. In this case, we are aggregating the transaction amount from the context of
+      Account Number and Transaction Date.</p>
+
+      <p>So, that is how contexts and measures work in Business Objects;
+        a unique and useful concept not found in other reporting environments such as Crystal or Oracle Discoverer.</p>
+    </article>
+
+    <hr/>
+
+  </div>
+
+
+
+
+
+
+  <aside class="large-3 columns">
+
+    <h5>Categories</h5>
+    <ul class="side-nav">
+      <li><a href="#">Visuals</a></li>
+      <li><a href="#">Code</a></li>
+      <li><a href="#">Data</a></li>
+      <li><a href="#">Weiqi</a></li>
+      <li><a href="#">Food</a></li>
+    </ul>
+  </aside>
+
+
+</div>
